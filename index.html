@@ -17,11 +17,11 @@
         </div>
       </div>
       <div id="unity-warning"> </div>
-      <div id="unity-footer">
+     <!--  <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
         <div id="unity-build-title">SpiderCard</div>
-      </div>
+      </div> -->
     </div>
     <script>
       var container = document.querySelector("#unity-container");
@@ -80,10 +80,10 @@
         // Avoid draining fillrate performance on mobile devices,
         // and default/override low DPI mode on mobile browsers.
         config.devicePixelRatio = 1;
-        unityShowBanner('WebGL builds are not supported on mobile devices.');
+        // unityShowBanner('WebGL builds are not supported on mobile devices.');
       } else {
-        canvas.style.width = "1080px";
-        canvas.style.height = "1920px";
+        // canvas.style.width = "1080px";
+        // canvas.style.height = "1920px";
       }
       loadingBar.style.display = "block";
 
@@ -94,13 +94,23 @@
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           loadingBar.style.display = "none";
-          fullscreenButton.onclick = () => {
-            unityInstance.SetFullscreen(1);
-          };
+          // fullscreenButton.onclick = () => {
+          //   unityInstance.SetFullscreen(1);
+          // };
         }).catch((message) => {
           alert(message);
         });
       };
+      var h=  document.documentElement.clientHeight;//获取body可见区域高度
+      var w =  document.documentElement.clientWidth;//获取body可见区域高度
+      var scale = w/h;
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        var scale = 1080/1920;
+      } else {
+        var scale = w/h;
+      }
+      if (w/h > scale) {canvas.height=h;canvas.width=h*scale;}
+      if (w/h <= scale) {canvas.height=w/scale;canvas.width=w;}
       document.body.appendChild(script);
     </script>
   </body>
